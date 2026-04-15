@@ -52,6 +52,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+api = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "python-multipart>=0.0.12",
+    "pydantic-settings>=2.0.0",
+]
 dev = [
     "pytest>=6.0",
     "pytest-cov>=2.0",
