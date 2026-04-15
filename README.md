@@ -420,7 +420,11 @@ ffmpeg -i output.wav -ac 1 -ar 48000 -b:a 64k -c:a libopus voice_reply.opus
 MEDIA: ./voice_reply.opus
 ```
 
- 在`OpenClaw +飞书`中使用该 skills 示例：
+以上步骤均已在当前skills实现 
+
+### `OpenClaw +飞书`中使用该 skills
+
+调用接口生成音频文件`voice_reply.wav`的同时会生成音频的base64文件`voice_base64.txt`，用于后续调用音频续写接口、音频克隆接口中的`reference_audio`参考音频参数传参
 
 ![image-20260415213650213](images/README/image-20260415213650213.png)
 
