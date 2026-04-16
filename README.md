@@ -1,3 +1,7 @@
+[TOC]
+
+## 背景
+
 基于 [VoxCPM](https://github.com/OpenBMB/VoxCPM) 新增了 FastAPI 的 HTTP API 服务
 
 ## 改动点
@@ -41,7 +45,7 @@ api/
 
 ## 文件说明
 
-### main.py
+**main.py**
 
 FastAPI 应用入口，负责：
 - 创建 FastAPI 应用实例
@@ -49,7 +53,7 @@ FastAPI 应用入口，负责：
 - 注册路由 (`/api/v1/tts`, `/api/v1/health`)
 - 管理应用生命周期（lifespan）
 
-### config.py
+**config.py**
 
 配置管理类 `APISettings`，使用 Pydantic Settings 从环境变量加载配置：
 
@@ -63,11 +67,11 @@ FastAPI 应用入口，负责：
 | `lazy_load` | `VOXCPM_API_LAZY_LOAD` | `True` | 是否懒加载模型 |
 | `default_output_format` | `VOXCPM_API_DEFAULT_OUTPUT_FORMAT` | `file` | 默认输出格式：`file` 或 `base64` |
 
-### models.py
+**models.py**
 
 Pydantic 模型定义：
 
-#### TTSRequest
+`TTSRequest`
 
 | 字段 | 类型 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -81,7 +85,7 @@ Pydantic 模型定义：
 | `denoise` | bool | False | 是否对参考音频降噪 |
 | `output_format` | string | None | 输出格式：`file` 或 `base64`，默认使用配置值 |
 
-#### TTSResponse
+`TTSResponse`
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
@@ -93,7 +97,7 @@ Pydantic 模型定义：
 | `model_id` | string | 使用的模型 ID |
 | `error` | ErrorDetail | 错误详情（失败时返回） |
 
-### dependencies.py
+**dependencies.py**
 
 FastAPI 依赖注入模块：
 - `get_settings()`: 获取缓存的 `APISettings` 实例
@@ -101,7 +105,7 @@ FastAPI 依赖注入模块：
 
 使用 `@lru_cache` 装饰器确保单例模式，避免重复加载模型。
 
-### services/tts_service.py
+**services/tts_service.py**
 
 TTS 核心服务封装类 `TTSService`：
 
@@ -120,13 +124,13 @@ TTS 核心服务封装类 `TTSService`：
 - `continue`: `text` + `reference_audio` + `reference_text`，语音续写
 - `combined`: `text` + `control_instruction` + `reference_audio`，组合模式
 
-### services/audio_utils.py
+**services/audio_utils.py**
 
 音频处理工具函数：
 - `decode_audio_base64(encoded)`: 将 base64 编码的音频解码为 numpy 数组
 - `encode_audio_base64(audio, sample_rate)`: 将 numpy 数组编码为 base64 字符串
 
-### routers/tts.py
+**routers/tts.py**
 
 TTS 路由处理模块：
 - `detect_mode(request)`: 根据请求参数自动识别生成模式
@@ -137,7 +141,7 @@ TTS 路由处理模块：
 - 支持文件下载和 base64 两种输出格式
 - 临时文件自动清理
 
-### routers/health.py
+**routers/health.py**
 
 健康检查路由：
 - `health_check()`: GET `/api/v1/health` 端点
@@ -420,9 +424,9 @@ ffmpeg -i output.wav -ac 1 -ar 48000 -b:a 64k -c:a libopus voice_reply.opus
 MEDIA: ./voice_reply.opus
 ```
 
-以上步骤均已在当前skills实现 
+**以上步骤均已在当前skills实现** 
 
-### `OpenClaw +飞书`中使用该 skills
+### `OpenClaw +飞书`中使用
 
 调用接口生成音频文件`voice_reply.wav`的同时会生成音频的base64文件`voice_base64.txt`，用于后续调用音频续写接口、音频克隆接口中的`reference_audio`参考音频参数传参
 
