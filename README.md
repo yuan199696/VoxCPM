@@ -1,5 +1,3 @@
-[TOC]
-
 ## 背景
 
 基于 [VoxCPM](https://github.com/OpenBMB/VoxCPM) 新增了 FastAPI 的 HTTP API 服务
